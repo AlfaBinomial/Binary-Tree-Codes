@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+	int data;
+	node *left;
+	node *right;
+};
+queue <node>n;
+void level_Order_traversel(node *root);
+node *insert(node *root,string ,int data);
+bool is_Bst(node *root,int mini,int maxi);
+void pre_order(node *root);
+node *insert_con(node *root,int data);
+int main(){
+	node *rootx = NULL;
+	rootx = insert_con(rootx,10);
+	rootx = insert_con(rootx,5);
+	rootx = insert_con(rootx,21);
+	rootx = insert_con(rootx,35);
+	rootx = insert_con(rootx,5);
+	rootx = insert_con(rootx,54);
+	level_Order_traversel(rootx);
+	return 0;
+}
+node *insert_con(node *root,int data){
+	if(root == NULL){
+		node *temp = new node();
+		temp->data = data;
+		temp->left = NULL;
+		temp->right = NULL;
+		root = temp;
+		return root;
+	}
+	else if(data <=root->data){
+		root->left = insert_con(root->left,data);
+	}
+	else root->right = insert_con (root->right,data);
+	return root;
+}
+void level_Order_traversel(node *root){
+	n.push(*root);
+	while(!n.empty()){
+		*root = n.front();
+		cout << root->data << " ";
+		n.pop();
+		if(root->left != NULL)n.push(*root->left); 
+		if(root->right!= NULL)n.push(*root->right);
+	}	
+}

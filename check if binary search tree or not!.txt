@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+int maxi=  INT_MAX;
+int mini  = INT_MIN;
+struct node{
+	int data;
+	node *left;
+	node *right;
+};
+node *insert(node *root,string ,int data);
+bool is_Bst(node *root,int mini,int maxi);
+void pre_order(node *root);
+node *insert_con(node *root,int data);
+int main(){
+	string left = "left";
+	string right = "right";
+	node *root = NULL;
+	root = insert(root,left,10);
+	root = insert(root,left,5);
+	root = insert(root,right,22);
+	root = insert(root,left,21);
+	root = insert(root,right,35);
+	root = insert(root,left,5);
+	root = insert(root,left,54);
+	pre_order(root);cout << endl;
+	cout << " For the first binary tree is  " << is_Bst(root,mini,maxi) << endl;
+	node *rootx = NULL;
+	rootx = insert_con(rootx,10);
+	rootx = insert_con(rootx,5);
+	rootx = insert_con(rootx,21);
+	rootx = insert_con(rootx,35);
+	rootx = insert_con(rootx,5);
+	rootx = insert_con(rootx,54);
+	cout << " For the second binary tree is  " << is_Bst(rootx,mini,maxi) << endl;
+	return 0;
+}
+node *insert(node *root,string psn,int data){
+	if(root == NULL){
+		node *temp = new node();
+		temp->data = data;
+		temp->left = NULL;
+		temp->right = NULL;
+		root = temp;
+		return root;
+	}
+	else if(psn == "left"){
+		root ->left = insert(root->left,psn,data);
+	}
+	else root->right = insert(root->right,psn,data);
+	return root;
+}
+void pre_order(node *root){
+	if(root == NULL)return;
+	cout << root->data << " ";
+	pre_order(root->left);
+	pre_order(root->right);
+}
+bool is_Bst(node *root,int min,int max){
+	if(root == NULL)return true;
+	if(root->data <= min || root->data > max)return false;
+	return is_Bst(root->left,min,root->data);
+	return is_Bst(root->right,root->data,max);
+}
+node *insert_con(node *root,int data){
+	if(root == NULL){
+		node *temp = new node();
+		temp->data = data;
+		temp->left = NULL;
+		temp->right = NULL;
+		root = temp;
+		return root;
+	}
+	else if(data <=root->data){
+		root->left = insert_con(root->left,data);
+	}
+	else root->right = insert_con (root->right,data);
+	return root;
+}

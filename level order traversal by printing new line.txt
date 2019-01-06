@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+	int data;
+	node *left;
+	node *right;
+};
+node *insert(node *root,int data){
+	if(root == NULL){
+		node *temp = new node();
+		temp->left = NULL;
+		temp->right = NULL;
+		temp->data = data;
+		root = temp;
+		return root;
+	}
+	else if(data <= root->data){
+		root->left = insert(root->left,data);
+	}
+	else root->right = insert(root->right,data);
+}
+void traversal(node *root){
+	if(root == NULL)return ;
+	cout << root->data << " ";
+	traversal(root->left);
+	traversal(root->right);
+}
+void lever_order_TraversalNewLine(node *root){
+	if(root == NULL)return;
+	queue <node>q1;
+	queue <node>q2;
+	q1.push(*root);
+	node *current = new node();
+	while(true){
+		if(q1.empty() && q2.empty())break;
+		if(!q1.empty() && q2.empty()){
+			while(!q1.empty()){
+				*current = q1.front();
+				cout << current->data  << " ";
+				if(current->left !=NULL){
+					q2.push(*current->left);
+				}
+				if(current->right != NULL){
+					q2.push(*current->right);
+				}
+				q1.pop();
+			}
+			cout << endl;
+		}
+		if(!q2.empty() && q1.empty()){
+			while(!q2.empty()){
+				*current = q2.front();
+				cout << current->data << " ";
+				if(current->left != NULL){
+					q1.push(*current->left);
+				}
+				if(current->right !=NULL){
+					q1.push(*current->right);
+				}
+				q2.pop();
+			}
+			cout << endl;
+		}	
+	}
+}
+int main(){
+	node *root = NULL;
+	root = insert(root,10);
+	root = insert(root,11);
+	root = insert(root,12);
+	root = insert(root,13);
+	root = insert(root,14);
+	root = insert(root,5);
+	root = insert(root,4);
+	root = insert(root,3);
+	traversal(root);
+	cout << endl;
+	lever_order_TraversalNewLine(root);
+	return 0;
+}

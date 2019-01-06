@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+	int data;
+	node *left;
+	node *right;
+};
+void check_sameOrNot(node *root1,node *root2);
+void pre_order(node *root);
+bool isSame = true;
+node* insert(node *root,int data);
+int main(){
+	node* root1 = NULL;
+	node*root2 = NULL;
+	cout << " first tree value inserted !";
+	cout << endl;
+	root1 = insert(root1,10);
+	root1 = insert(root1,20);
+	root1 = insert(root1,2);	
+	root1 = insert(root1,34);
+	root1 = insert(root1,25);
+	root1 = insert(root1,9);
+	pre_order(root1);
+	cout << " second tree value inserted !";
+	cout << endl;
+	root2 = insert(root2,10);
+	root2 = insert(root2,20);
+	root2 = insert(root2,2);
+	root2 = insert(root2,34);
+	root2 = insert(root2,25);
+	root2 = insert(root2,9);
+	pre_order(root2);
+	cout << endl;
+	check_sameOrNot(root1,root2);
+	(isSame == true)?cout <<"same" :cout << "not same";
+	return 0;
+}
+node * insert(node *root,int data){
+	if(root == NULL){
+		node* temp = new node();
+		temp->data = data;
+		temp->left = NULL;
+		temp->right = NULL;
+		root = temp;
+		return root;
+	}
+	else if(data <root->data){
+		root->left = insert(root->left,data);
+	}
+	else root->right = insert(root->right,data);
+	return root;
+}
+void pre_order(node *root){
+	if(root == NULL)return;
+	cout << root->data <<" ";
+	pre_order(root->left);
+	pre_order(root->right);
+}
+void check_sameOrNot(node *root1,node *root2){
+	if(root1 == NULL && root2 == NULL)return;
+	if(root1 == NULL || root2 == NULL){
+		isSame = false;
+		return;
+	}
+	check_sameOrNot(root1->left,root2->left);
+	check_sameOrNot(root1->right,root2->right);
+}
+
+
+
+
+
+
+
+
+

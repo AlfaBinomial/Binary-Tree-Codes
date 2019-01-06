@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+#include<stack>
+using namespace std;
+struct node{
+	int data;
+	node *left;
+	node *right;
+};
+void traversal(node *root);
+node *insert(node *root,int data);
+void level_order_traversalReverse(node *root);
+int main(){
+	node *root = NULL;
+	root = insert(root,10);
+	root = insert(root,11);
+	root = insert(root,12);
+	root = insert(root,13);
+	root = insert(root,14);
+	root = insert(root,5);
+	root = insert(root,4);
+	root = insert(root,3);
+	traversal(root);
+	cout << endl;
+	level_order_traversalReverse(root);
+	return 0;
+}
+void traversal(node *root){
+	if(root == NULL)return;
+	cout << root->data << " ";
+	traversal(root->left);
+	traversal(root->right);
+}
+void level_order_traversalReverse(node *root){
+	stack<node>s;
+	queue<node>q;
+	q.push(*root);
+	node *current = new node();
+	while(!q.empty()){
+		*current = q.front();
+		if(current->right !=NULL){
+			q.push(*current->right);
+		}
+		if(current->left != NULL){
+			q.push(*current->left);
+		}
+		s.push(*current);
+		q.pop();
+	}
+	while(!s.empty()){
+		*current = s.top();
+		cout << current->data << " ";
+		s.pop();
+	}
+}
+node *insert(node *root,int data){
+	if(root == NULL){
+		node *temp = new node();
+		temp->left = NULL;
+		temp->right = NULL;
+		temp->data = data;
+		root = temp;
+		return root;
+	}
+	else if(data <= root->data){
+		root->left = insert(root->left,data);
+	}
+	else root->right = insert(root->right,data);
+}
+
+
+
+
+
+
+

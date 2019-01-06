@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+	int data;
+	node *left;node* right;
+};
+node *insert(node* root,int data){
+	if(root == NULL){
+		node *temp = new node();
+		temp->data = data;
+		temp->left = NULL;
+		temp->right = NULL;
+		root = temp;
+		return root;
+	}
+	else if(data <root->data){
+		root->left = insert(root->left,data);
+	}
+	else root->right = insert(root->right,data);
+	return root;
+}
+int totalNodes = 0;
+void traversal(node *root){
+	if(root == NULL)return;
+	totalNodes++;
+	traversal(root->left);
+	traversal(root->right);
+}
+int main(){
+	node *root = NULL;
+	root = insert(root,25);
+	root = insert(root,20);
+	root = insert(root,15);
+	root = insert(root,35);
+	root = insert(root,5);
+	root = insert(root,6);
+	root = insert(root,3);
+	root = insert(root,50);
+	traversal(root);
+	cout << totalNodes;
+	return 0;
+}

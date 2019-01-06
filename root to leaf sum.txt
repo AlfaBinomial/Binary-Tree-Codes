@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{ 
+	int data;
+	node *left;node* right;
+};
+stack<int>s;
+int max(int a,int b){
+	return((a>b)?a:b);
+}
+node *insert(node* root,int data){
+	if(root == NULL){
+		node *temp = new node();
+		temp->data = data;
+		temp->left = NULL;
+		temp->right = NULL;
+		root = temp;
+		return root;
+	}
+	else if(data <root->data){
+		root->left = insert(root->left,data);
+	}
+	else root->right = insert(root->right,data);
+	return root;
+}
+int totalNodes = 0;
+bool rootToLeafSum(node *root,int sum){
+	if(root == NULL)return false;
+	if(root->left == NULL && root->right == NULL){
+		if(root->data == sum)return true;
+		else return false;
+	}
+	if(rootToLeafSum(root->left,sum-root->data)){
+		s.push(root->data);
+		return true;
+	}
+	if(rootToLeafSum(root->right,sum-root->data)){
+		s.push(root->data);
+		return true;
+	}
+	return false;
+}
+int main(){
+	root = insert(root,10);
+	root = insert(root,16);
+	root = insert(root,5);
+	root = insert(root,6);
+	cout << rootToLeafSum(root,26);
+	cout << endl;
+	while(true){
+		cout << s.top() <<" ";
+		s.pop();
+		if(s.empty() == true)break;
+	}
+	return 0;
+}

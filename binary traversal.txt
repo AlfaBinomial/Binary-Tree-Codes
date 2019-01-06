@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+	char data;
+	node *left;node *right;
+};
+void pre_order(node *root);
+void in_order(node *root);
+void post_order(node *root);
+node* insertData(node* root,int data);
+int main(){
+    node* root = NULL;
+	root = insertData(root,'A');
+	root = insertData(root,'z');
+	root = insertData(root,'X');
+	root = insertData(root,'D');
+	root = insertData(root,'P');
+	root = insertData(root,'I');
+	cout <<" pre order traversal : ";
+	pre_order(root);cout << endl;
+	cout << "in order traversal : ";
+	in_order(root);
+	cout << endl;
+	cout << "post order traversal ";
+	post_order(root);
+	return 0;
+}
+node* insertData(node* root,int data){
+	if(root == NULL){
+		node *temp = new node();
+		temp->data = data;
+		temp->left = NULL;
+		temp->right = NULL;
+		root = temp;
+		return root;
+	}
+	else if(data<= root->data){
+		root->left = insertData(root->left,data);
+	}
+	else root->right = insertData(root->right,data);
+	return root;
+}
+void pre_order(node *root){
+	if(root == NULL)return;
+	printf("%c ",root->data);
+	pre_order(root->left);
+	pre_order(root->right);
+}
+void in_order(node *root){
+	if(root == NULL)return;
+	in_order(root->left);
+	printf("%c ",root->data);
+	in_order(root->right);
+}
+void post_order(node *root){
+	if(root == NULL)return;
+	post_order(root->left);
+	post_order(root->right);
+	printf("%c ",root->data);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
